@@ -1,5 +1,7 @@
 import requests
 import pandas
+import datetime
+import dateutil
 import simplejson as json
 from bokeh.plotting import figure
 from bokeh.palettes import Spectral11
