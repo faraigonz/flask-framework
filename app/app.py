@@ -26,29 +26,29 @@ def graph():
 #    if request.method == 'POST':
         app.vars['ticker'] = request.form['ticker']
         
-        api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
+        stock_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
         session = requests.Session()
         session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
-        raw_data = session.get(api_url)
+        stock_data = session.get(stock_url)
 	#today = datetime.date.today()
 	#month = current_date - dateutil.relativedelta.relativedelta(months=1)
-        a = raw_data.json()
-        df = pandas.DataFrame(a['data'], columns=a['column_names'])
+        data = stock_data.json()
+        stock_df = pandas.DataFrame(data['data'], columns=data['column_names'])
 
-        df['Date'] = pandas.to_datetime(df['Date'])
+        stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
 
         p = figure(title='Stock prices for %s' % app.vars['ticker'],
             x_axis_label='date',
             x_axis_type='datetime')
         
         if request.form.get('Close'):
-            p.line(x=df['Date'].values, y=df['Close'].values,line_width=2, legend='Close')
+            p.line(x=stock_df['Date'].values, y=stock_df['Close'].values,line_width=2, legend='Close')
         if request.form.get('Adj. Close'):
-            p.line(x=df['Date'].values, y=df['Adj. Close'].values,line_width=2, line_color="green", legend='Adj. Close')
+            p.line(x=stock_df['Date'].values, y=stock_df['Adj. Close'].values,line_width=2, line_color="green", legend='Adj. Close')
         if request.form.get('Open'):
-            p.line(x=df['Date'].values, y=df['Open'].values,line_width=2, line_color="red", legend='Open')
+            p.line(x=stock_df['Date'].values, y=stock_df['Open'].values,line_width=2, line_color="red", legend='Open')
         if request.form.get('Adj. Open'):
-            p.line(x=df['Date'].values, y=df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
+            p.line(x=stock_df['Date'].values, y=stock_df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
         script, div = components(p)
         return render_template('plots.html', script=script, div=div)
 
