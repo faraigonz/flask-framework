@@ -19,7 +19,7 @@ def main():
 def index():
     return render_template('index.html')
     
-@app.route('/graph', methods=['POST'])
+@app.route('/plots', methods=['POST'])
 def graph():
 #    if request.method == 'POST':
         app.vars['ticker'] = request.form['ticker']
@@ -47,7 +47,7 @@ def graph():
         if request.form.get('Adj. Open'):
             p.line(x=df['Date'].values, y=df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
         script, div = components(p)
-        return render_template('graph.html', script=script, div=div)
+        return render_template('plots.html', script=script, div=div)
 
 if __name__ == '__main__':
     app.run(port=33507)
