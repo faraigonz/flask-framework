@@ -1,6 +1,6 @@
 import requests
 import pandas
-import datetime
+from datetime import datetime, date
 import dateutil
 import simplejson as json
 from bokeh.plotting import figure
@@ -30,7 +30,7 @@ def graph():
         session = requests.Session()
         session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
         raw_data = session.get(api_url)
-	#current_date = datetime.date.today()
+	current_date = date.today()
 	#month = current_date - dateutil.relativedelta.relativedelta(months=1)
         a = raw_data.json()
         df = pandas.DataFrame(a['data'], columns=a['column_names'])
