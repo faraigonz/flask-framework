@@ -1,5 +1,5 @@
 import requests
-import pandas
+import pandas as pd
 from datetime import datetime, date
 import dateutil
 import simplejson as json
@@ -28,25 +28,28 @@ def plots():
         stock_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
     
         stock_data = requests.get(stock_url)
-	#today = datetime.date.today()
-	#month = current_date - dateutil.relativedelta.relativedelta(months=1)
-        #data = stock_data.json()
-        stock_df = pandas.DataFrame(stock_data.json()['data'], columns=stock_data.json()['column_names'])
+	
+        stock_df = pd.DataFrame(stock_data.json()['data'], columns=stock_data.json()['column_names'])
 
-        stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
+        stock_df['Date'] = pd.to_datetime(stock_df['Date'])
 
         p = figure(title='Stock prices for %s' % app.vars['ticker'], x_axis_label='Date', y_axis_label='USD', x_axis_type='datetime')
         
         if request.form.get('Close'):
             p.line(x=stock_df['Date'].values, y=stock_df['Close'].values,line_width=2, legend='Close')
-        if request.form.get('Adj. Close'):
+        
+	if request.form.get('Adj. Close'):
             p.line(x=stock_df['Date'].values, y=stock_df['Adj. Close'].values,line_width=2, line_color="green", legend='Adj. Close')
-        if request.form.get('Open'):
+        
+	if request.form.get('Open'):
             p.line(x=stock_df['Date'].values, y=stock_df['Open'].values,line_width=2, line_color="red", legend='Open')
-        if request.form.get('Adj. Open'):
+        
+	if request.form.get('Adj. Open'):
             p.line(x=stock_df['Date'].values, y=stock_df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
-        script, div = components(p)
-        return render_template('plots.html', script=script, div=div)
+        
+	script, div = components(p)
+        
+	return render_template('plots.html', script=script, div=div)
 
 if __name__ == '__main__':
     app.run(port=33507)
