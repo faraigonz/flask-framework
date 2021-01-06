@@ -35,7 +35,7 @@ def plots():
 
         stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
 
-        p = figure(title='Stock prices for %s' % app.vars['ticker'], x_axis_label='date', x_axis_type='datetime')
+        p = figure(title='%s Stock Information' % app.vars['ticker'], x_axis_label='Date', x_axis_type='datetime')
         
         if request.form.get('Close'):
             p.line(x=stock_df['Date'].values, y=stock_df['Close'].values,line_width=2, legend='Close')
