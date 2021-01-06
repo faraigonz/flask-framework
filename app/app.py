@@ -4,9 +4,9 @@ from datetime import datetime, date
 import dateutil
 import simplejson as json
 from bokeh.plotting import figure
-from bokeh.palettes import Spectral11
+#from bokeh.palettes import Spectral11
 from bokeh.embed import components 
-from flask import Flask,render_template,request,redirect,session
+from flask import Flask,render_template,request,redirect
 
 app = Flask(__name__)
 
@@ -22,13 +22,12 @@ def index():
     return render_template('index.html')
     
 @app.route('/plots', methods=['POST'])
-def graph():
-#    if request.method == 'POST':
+def plots():
+#   
         app.vars['ticker'] = request.form['ticker']
         
         stock_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
-        #session = requests.Session()
-        #session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
+    
         stock_data = requests.get(stock_url)
 	#today = datetime.date.today()
 	#month = current_date - dateutil.relativedelta.relativedelta(months=1)
@@ -37,9 +36,7 @@ def graph():
 
         stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
 
-        p = figure(title='Stock prices for %s' % app.vars['ticker'],
-            x_axis_label='date',
-            x_axis_type='datetime')
+        p = figure(title='Stock prices for %s' % app.vars['ticker'], x_axis_label='Date', y_axis_label='USD', x_axis_type='datetime')
         
         if request.form.get('Close'):
             p.line(x=stock_df['Date'].values, y=stock_df['Close'].values,line_width=2, legend='Close')
