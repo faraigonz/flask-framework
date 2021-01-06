@@ -4,9 +4,8 @@ from datetime import datetime, date
 import dateutil
 import simplejson as json
 from bokeh.plotting import figure
-#from bokeh.palettes import Spectral11
 from bokeh.embed import components 
-from flask import Flask,render_template,request,redirect
+from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
 
@@ -31,8 +30,8 @@ def plots():
         stock_data = requests.get(stock_url)
 	#today = datetime.date.today()
 	#month = current_date - dateutil.relativedelta.relativedelta(months=1)
-        data = stock_data.json()
-        stock_df = pandas.DataFrame(data['data'], columns=data['column_names'])
+        #data = stock_data.json()
+        stock_df = pandas.DataFrame(stock_data.json()['data'], columns=stock_data.json()['column_names'])
 
         stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
 
