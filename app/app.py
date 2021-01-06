@@ -26,7 +26,7 @@ def graph():
 #    if request.method == 'POST':
         app.vars['ticker'] = request.form['ticker']
         
-        api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=gVz7XbzeecyxHdkCn8yB' % app.vars['ticker']
+        api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=gVz7XbzeecyxHdkCn8yB?start_date=2020-01-01&end_date=2020-02-01' % app.vars['ticker']
         session = requests.Session()
         session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
         raw_data = session.get(api_url)
