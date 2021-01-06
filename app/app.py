@@ -22,6 +22,8 @@ def index():
     
 @app.route('/plots', methods=['POST'])
 def plots():
+
+	today = date.today()
    
         app.vars['ticker'] = request.form['ticker']
         
