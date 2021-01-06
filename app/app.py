@@ -12,13 +12,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return redirect('/userform')
+    return redirect('/index')
 
-@app.route('/userform',methods=['GET'])
+@app.route('/index',methods=['GET'])
 def userstockform():
-    return render_template('userstockform.html')
+    return render_template('index.html')
 
-@app.route('/results',methods=['POST'])
+@app.route('/plots',methods=['POST'])
 def stockresults():
 
     # Read user input from form
@@ -54,7 +54,7 @@ def stockresults():
 
     script, div = components(p)
 
-    return render_template('results.html',name=name, tickersymbol=tickersymbol, script=script, div=div)
+    return render_template('plots.html',name=name, tickersymbol=tickersymbol, script=script, div=div)
 
 
 
