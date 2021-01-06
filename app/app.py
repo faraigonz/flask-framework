@@ -31,9 +31,6 @@ def graph():
 
         a = raw_data.json()
 
-	if len(a) == 0:
-            return render_template('error.html')
-
         df = pandas.DataFrame(a['data'], columns=a['column_names'])
 
         df['Date'] = pandas.to_datetime(df['Date'])
