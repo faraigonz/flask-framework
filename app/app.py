@@ -35,16 +35,16 @@ def plots():
 
         stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
 
-        plot = figure(title='Stock prices for %s' % app.vars['ticker'], x_axis_label='date', x_axis_type='datetime')
+        p = figure(title='Stock prices for %s' % app.vars['ticker'], x_axis_label='date', x_axis_type='datetime')
         
         if request.form.get('Close'):
-            plot.line(x=stock_df['Date'].values, y=stock_df['Close'].values,line_width=2, legend='Close')
+            p.line(x=stock_df['Date'].values, y=stock_df['Close'].values,line_width=2, legend='Close')
         if request.form.get('Adj. Close'):
-            plot.line(x=stock_df['Date'].values, y=stock_df['Adj. Close'].values,line_width=2, line_color="green", legend='Adj. Close')
+            p.line(x=stock_df['Date'].values, y=stock_df['Adj. Close'].values,line_width=2, line_color="green", legend='Adj. Close')
         if request.form.get('Open'):
-            plot.line(x=stock_df['Date'].values, y=stock_df['Open'].values,line_width=2, line_color="red", legend='Open')
+            p.line(x=stock_df['Date'].values, y=stock_df['Open'].values,line_width=2, line_color="red", legend='Open')
         if request.form.get('Adj. Open'):
-            plot.line(x=stock_df['Date'].values, y=stock_df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
+            p.line(x=stock_df['Date'].values, y=stock_df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
         script, div = components(p)
         return render_template('plots.html', script=script, div=div)
 
