@@ -1,5 +1,5 @@
 import requests
-import pandas as pd
+import pandas
 from datetime import datetime, date
 import dateutil
 import simplejson as json
@@ -29,9 +29,9 @@ def plots():
     
         stock_data = requests.get(stock_url)
 	
-        stock_df = pd.DataFrame(stock_data.json()['data'], columns=stock_data.json()['column_names'])
+        stock_df = pandas.DataFrame(stock_data.json()['data'], columns=stock_data.json()['column_names'])
 
-        stock_df['Date'] = pd.to_datetime(stock_df['Date'])
+        stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
 
         p = figure(title='Stock prices for %s' % app.vars['ticker'], x_axis_label='Date', y_axis_label='USD', x_axis_type='datetime')
         
