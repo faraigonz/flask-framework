@@ -23,17 +23,17 @@ def index():
 def graph():
 #    if request.method == 'POST':
         app.vars['ticker'] = request.form['ticker']
-	#app.vars['results'] = ap.get_data(app.vars['ticker'])
-
-	#if len(app.vars['results']) == 0:
-        #    return render_template('error.html')
-        
+	
         api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=gVz7XbzeecyxHdkCn8yB' % app.vars['ticker']
         session = requests.Session()
         session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
         raw_data = session.get(api_url)
 
         a = raw_data.json()
+
+	if len(a) == 0:
+            return render_template('error.html')
+
         df = pandas.DataFrame(a['data'], columns=a['column_names'])
 
         df['Date'] = pandas.to_datetime(df['Date'])
