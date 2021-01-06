@@ -1,5 +1,5 @@
 import requests
-import pandas
+import pandas as pd
 import simplejson as json
 import datetime
 import dateutil
