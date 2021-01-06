@@ -1,5 +1,5 @@
 import requests
-import pandas
+import pandas as pd
 from datetime import datetime, date
 import dateutil
 import simplejson as json
@@ -22,16 +22,16 @@ def index():
     
 @app.route('/plots', methods=['POST'])
 def plots():
-#   
+   
         app.vars['ticker'] = request.form['ticker']
         
         stock_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
     
         stock_data = requests.get(stock_url)
 	
-        stock_df = pandas.DataFrame(stock_data.json()['data'], columns=stock_data.json()['column_names'])
+        stock_df = pd.DataFrame(stock_data.json()['data'], columns=stock_data.json()['column_names'])
 
-        stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
+        stock_df['Date'] = pd.to_datetime(stock_df['Date'])
 
         p = figure(title='Stock prices for %s' % app.vars['ticker'], x_axis_label='Date', y_axis_label='USD', x_axis_type='datetime')
         
