@@ -25,7 +25,7 @@ def stockresults():
     tickersymbol = request.form['tickersymbol']
 
     # Get data and create dataframe
-    dataurl = 'https://www.quandl.com/api/v3/datasets/WIKI/' + tickersymbol + '.json'
+    dataurl = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=gVz7XbzeecyxHdkCn8yB' % tickersymbol
     r = requests.get(dataurl)
     dataset_df = pd.DataFrame(r.json())['dataset'].apply(pd.Series)
     data = dataset_df.ix['data',:].apply(pd.Series)
