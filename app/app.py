@@ -27,16 +27,19 @@ def plots():
         app.vars['ticker'] = request.form['ticker']
 	
         stock_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
-        session = requests.Session()
-        session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
-        stock_data = session.get(stock_url)
+        #session = requests.Session()
+        #session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
+        
+	r = requests.get(stock_url)
+	data_df = pd.DataFrame(r.json())['dataset'].apply(pd.Series)
+        data = dataset_df.ix['data',:].apply(pd.Series)
+        data.columns = dataset_df.ix['column_names',0:12]
+        data['Date'] = pd.to_datetime(data['Date'])
 
-        data = stock_data.json()
-
-        stock_df = pandas.DataFrame(data['data'], columns=data['column_names'])
+        #stock_df = pandas.DataFrame(data['data'], columns=data['column_names'])
 	current_date = datetime.date.today()
 	month = current_date - dateutil.relativedelta.relativedelta(months=1)
-	stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
+	#stock_df['Date'] = pandas.to_datetime(stock_df['Date'])
 	month_data = stock_df[stock_df['Date']>month]
 
         p = figure(title='%s Stock Information' % app.vars['ticker'], x_axis_label='Date', x_axis_type='datetime',
