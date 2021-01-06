@@ -29,7 +29,7 @@ def graph():
         stock_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
         #session = requests.Session()
         #session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
-        stock_data = session.get(stock_url)
+        stock_data = requests.get(stock_url)
 	#today = datetime.date.today()
 	#month = current_date - dateutil.relativedelta.relativedelta(months=1)
         data = stock_data.json()
