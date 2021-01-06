@@ -31,7 +31,7 @@ def graph():
         session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
         raw_data = session.get(api_url)
 	current_date = datetime.date.today()
-	month = current_date - dateutil.relativedelta.relativedelta(months=1)
+	#month = current_date - dateutil.relativedelta.relativedelta(months=1)
         a = raw_data.json()
         df = pandas.DataFrame(a['data'], columns=a['column_names'])
 
