@@ -37,19 +37,14 @@ def plots():
         
         if request.form.get('Close'):
             p.line(x=stock_df['Date'].values, y=stock_df['Close'].values,line_width=2, legend='Close')
-        
-	if request.form.get('Adj. Close'):
+       	if request.form.get('Adj. Close'):
             p.line(x=stock_df['Date'].values, y=stock_df['Adj. Close'].values,line_width=2, line_color="green", legend='Adj. Close')
-        
-	if request.form.get('Open'):
+       	if request.form.get('Open'):
             p.line(x=stock_df['Date'].values, y=stock_df['Open'].values,line_width=2, line_color="red", legend='Open')
-        
-	if request.form.get('Adj. Open'):
+       	if request.form.get('Adj. Open'):
             p.line(x=stock_df['Date'].values, y=stock_df['Adj. Open'].values,line_width=2, line_color="purple", legend='Adj. Open')
-        
-	script, div = components(p)
-        
-	return render_template('plots.html', script=script, div=div)
+       	script, div = components(p)
+       	return render_template('plots.html', script=script, div=div)
 
 if __name__ == '__main__':
     app.run(port=33507)
