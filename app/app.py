@@ -22,7 +22,8 @@ def index():
     
 @app.route('/plots', methods=['POST'])
 def plots():
-   
+
+	today = date.today()   
         app.vars['ticker'] = request.form['ticker']
         
         stock_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json?api_key=ues6Mm1_essC2iP-xMx6' % app.vars['ticker']
